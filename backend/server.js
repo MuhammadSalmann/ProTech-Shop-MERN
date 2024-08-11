@@ -10,7 +10,7 @@ import products from './data/products.js';
 import connectDB from './db.js';
 connectDB();
 
-// Middleware to log all requests
+// Middlewares
 app.use((req, res, next) => {
     console.log(req.method, req.hostname, req.path);
     next();
