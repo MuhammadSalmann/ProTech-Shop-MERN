@@ -7,7 +7,7 @@ const PORT = process.env.PORT || 5000;
 import products from './data/products.js';
 
 // Connect to MongoDB
-import connectDB from './db.js';
+import connectDB from './config/db.js';
 connectDB();
 
 // Middlewares
