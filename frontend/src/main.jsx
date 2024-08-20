@@ -1,14 +1,16 @@
 import React from 'react'
+import ReactDOM from 'react-dom/client'
 import { App } from './App.jsx'
 // import 'bootstrap/dist/css/bootstrap.min.css'  // This is the default bootstrap css
 import './assets/styles/bootstrap.custom.css'  // This is the custom bootstrap css
 import './assets/styles/index.css'  // This is the custom css
 
-import ReactDOM from 'react-dom/client'
+// React Router
 import { createBrowserRouter, createRoutesFromElements, Route, RouterProvider } from 'react-router-dom'
+// Redux
 import { Provider } from 'react-redux'
 import store from './store.js'
-
+// Screens
 import HomeScreen from './screens/HomeScreen.jsx'
 import ProductScreen from './screens/ProductScreen.jsx'
 
