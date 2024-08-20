@@ -9,8 +9,7 @@ export const App = () => {
       <Header />
       <main className='py-3'>
           <Container>
-          <h1>Welcome to ProTech</h1>
-          <Outlet />
+            <Outlet />
           </Container>
       </main>
       <Footer />
