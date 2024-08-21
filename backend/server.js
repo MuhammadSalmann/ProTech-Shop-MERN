@@ -23,6 +23,9 @@ app.get('/', (req, res) => {
 import productRoutes from './routes/productRoutes.js';
 app.use('/api/products', productRoutes);
 
+// User Routes
+import userRoutes from './routes/userRoutes.js';
+app.use('/api/users', userRoutes);
 
 // Error Middleware
 import { errorHandler, notFound } from './middleware/errorMiddleware.js';
