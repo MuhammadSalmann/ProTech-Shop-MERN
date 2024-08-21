@@ -1,11 +1,40 @@
 import wrapAsync from '../middleware/wrapAsync.js';
 import User from '../models/userModel.js';
+import jwt from 'jsonwebtoken';
 
 // @desc    Auth user and get token
 // @route   POST /api/users/login
 // @access  Public
 const authUser = wrapAsync(async (req, res) => {
-    res.send('auth user');
+    const { email, password } = req.body;
+    if(!email || !password) {
+        res.status(400).json({ message: 'All Fields should be Filled'})
+        throw new Error('All Fields should be Filled');
+    }
+    
+    const existingUser = await User.findOne({ email });
+    if(existingUser && (await existingUser.matchPassword(password))) {
+        
+        const token = jwt.sign({ userId: existingUser._id }, process.env.JWT_SECRET, {expiresIn: '2d'});
+        // Set the JWT token as the httpOnly cookie
+        res.cookie('token', token, {
+            httpOnly: true,
+            secure: process.env.NODE_ENV === 'production',
+            sameSite: 'strict',
+            maxAge: 2 * 24 * 60 * 60 * 1000 // 2 days
+        })
+
+        res.json({
+            _id: existingUser._id,
+            name: existingUser.name,
+            email: existingUser.email,
+            isAdmin: existingUser.isAdmin
+        })
+    }
+    else {
+        res.status(401).json({ message: 'Invalid email or password' });
+        throw new Error('Invalid email or password');
+    }
 });
 
 // @desc    Register user
