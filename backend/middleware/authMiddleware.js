@@ -8,7 +8,7 @@ export const protect = wrapAsync(async (req, res, next) => {
     if(token) {
         try {
             const decodeToken = jwt.verify(token, process.env.JWT_SECRET);
-            req.user = await User.findById(decodeToken.userId).select('-password');
+            req.user = await User.findById(decodeToken.userId).select('-password'); // exclude password
             next();
         } catch (error) {
             res.status(401);
