@@ -29,6 +29,8 @@ const cartSlice = createSlice({
         saveShippingAddress(state, action) {
             state.shippingAddress = action.payload;
             return updateCart(state);
+            // we update the cart after saving the shipping address?  Yes, because the shipping address can affect the shipping price
+            // and the total price of the cart. So, we need to update the cart after saving the shipping address.
         },
         updateQuantity(state, action) {
             const { id, quantity } = action.payload;
