@@ -32,6 +32,10 @@ const cartSlice = createSlice({
             // we update the cart after saving the shipping address?  Yes, because the shipping address can affect the shipping price
             // and the total price of the cart. So, we need to update the cart after saving the shipping address.
         },
+        savePaymentMethod(state, action) {
+            state.paymentMethod = action.payload;
+            return updateCart(state);
+        },
         updateQuantity(state, action) {
             const { id, quantity } = action.payload;
             const item = state.cartItems.find((i) => i.id === id);
@@ -42,6 +46,6 @@ const cartSlice = createSlice({
     },
 })
 
-export const { addToCart, removeFromCart, updateQuantity, saveShippingAddress } = cartSlice.actions;
+export const { addToCart, removeFromCart, updateQuantity, saveShippingAddress, savePaymentMethod } = cartSlice.actions;
 
 export default cartSlice.reducer;

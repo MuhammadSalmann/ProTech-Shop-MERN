@@ -35,6 +35,10 @@ app.use('/api/products', productRoutes);
 import userRoutes from './routes/userRoutes.js';
 app.use('/api/users', userRoutes);
 
+// Order Routes
+import orderRoutes from './routes/orderRoutes.js';
+app.use('/api/orders', orderRoutes);
+
 // Error Middleware
 import { errorHandler, notFound } from './middleware/errorMiddleware.js';
 app.use(notFound);
