@@ -37,7 +37,7 @@ const PlaceOrderScreen = () => {
                 totalPrice: cart.totalPrice
             }).unwrap();
 
-            // dispatch(clearCart())
+            dispatch(clearCart())
             toast.success('Order Successful!')
             navigate(`/order/${res._id}`)
         } catch (error) {
