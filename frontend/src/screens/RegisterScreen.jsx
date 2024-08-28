@@ -38,7 +38,7 @@ const RegisterScreen = () => {
             return
         } else {
             try {
-                const res = await registerApiCall({ name, email, password }).unwrap() // Unwrap the promise
+                const res = await registerApiCall({ name, email, password }).unwrap() // Unwrap the promise. Same as doing {res} = await registerApiCall({ name, email, password })
                 dispatch(setCredentials({ ...res }))
                 toast.success('Registeration Successful')
                 navigate(redirect)
