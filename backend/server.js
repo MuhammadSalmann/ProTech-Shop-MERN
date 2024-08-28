@@ -39,6 +39,9 @@ app.use('/api/users', userRoutes);
 import orderRoutes from './routes/orderRoutes.js';
 app.use('/api/orders', orderRoutes);
 
+// Paypal Config Route
+app.get('/api/config/paypal', (req, res) => res.send({ clientId: process.env.PAYPAL_CLIENT_ID}));
+
 // Error Middleware
 import { errorHandler, notFound } from './middleware/errorMiddleware.js';
 app.use(notFound);
