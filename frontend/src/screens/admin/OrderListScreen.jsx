@@ -1,6 +1,4 @@
 import { LinkContainer } from "react-router-bootstrap"
-import { useDispatch, useSelector } from "react-redux"
-import { useEffect } from "react"
 import { Table, Button } from "react-bootstrap"
 import Message from "../../components/Message"
 import Loader from "../../components/Loader"
@@ -9,7 +7,6 @@ import { FaTimes } from "react-icons/fa"
 
 
 const OrderListScreen = () => {
-  const dispatch = useDispatch()
   const { data: orders, isLoading, isError } = useGetOrdersQuery()
 
   return (
