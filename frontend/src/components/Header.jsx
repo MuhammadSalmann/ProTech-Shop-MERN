@@ -1,9 +1,9 @@
-import { Badge, Navbar, Nav, Container, NavDropdown } from 'react-bootstrap'
+import { Badge, Navbar, Nav, Container, NavDropdown, Image } from 'react-bootstrap'
 import { FaShoppingCart, FaUser } from 'react-icons/fa'
 import { LinkContainer } from 'react-router-bootstrap'
 import { useSelector, useDispatch } from 'react-redux'
 import { useNavigate } from 'react-router-dom'
-import logo from '../assets/logo.png'
+import logo from '../assets/ProTech-logo.png'
 import { useLogoutMutation } from '../slices/usersApiSlice'
 import { logout } from '../slices/authSlice'
 import { toast } from 'react-toastify'
@@ -32,18 +32,20 @@ const Header = () => {
     
   return (
     <header>
-        <Navbar bg='dark' variant='dark' expand='md' collapseOnSelect>
+        <Container>
+        <Navbar className='p-0' bg='primary' variant='dark' expand='md' collapseOnSelect>
             <Container>
             <LinkContainer to='/'>
             <Navbar.Brand>
-                <img src={logo} alt="ProTech" />
-                ProTech
+                <Image width={70} height={70} src={logo} alt="ProTech" />
             </Navbar.Brand>
             </LinkContainer>
             <Navbar.Toggle aria-controls='basic-navbar-nav' />
             <Navbar.Collapse id='basic-navbar-nav'>
-                <Nav className='ms-auto'>
+                <Nav className='ms-auto w-100 d-flex align-items-center'>
+                <div className='mx-auto'>
                     <SearchBox />
+                </div>
                 <LinkContainer to='/cart'>
                 <Nav.Link>
                     <FaShoppingCart /> Cart
@@ -85,6 +87,8 @@ const Header = () => {
             </Navbar.Collapse>
             </Container>
         </Navbar>
+        </Container>
+        
     </header>
   )
 }
