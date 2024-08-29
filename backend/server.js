@@ -24,11 +24,7 @@ app.use(cookieParser());
 app.use((req, res, next) => {
     console.log(req.method, req.hostname, req.path);
     next();
-})
-
-app.get('/', (req, res) => {
-    res.send('API is running...');
-})
+});
 
 // Product Route
 import productRoutes from './routes/productRoutes.js';
@@ -51,6 +47,17 @@ app.use('/uploads', express.static(path.join(__dirname, '/uploads')));
 
 // Paypal Config Route
 app.get('/api/config/paypal', (req, res) => res.send({ clientId: process.env.PAYPAL_CLIENT_ID}));
+
+if(process.env.NODE_ENV === 'production') {
+    // Set static folder
+    app.use(express.static(path.join(__dirname, '/frontend/dist')));
+    // any route that is not the api route, will be redirected to the index.html file
+    app.get('*', (req, res) => res.sendFile(path.resolve(__dirname, 'frontend', 'dist', 'index.html')));
+} else {
+    app.get('/', (req, res) => {
+        res.send('API is running...');
+    })
+}
 
 // Error Middleware
 import { errorHandler, notFound } from './middleware/errorMiddleware.js';

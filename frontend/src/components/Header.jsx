@@ -43,7 +43,7 @@ const Header = () => {
             <Navbar.Toggle aria-controls='basic-navbar-nav' />
             <Navbar.Collapse id='basic-navbar-nav'>
                 <Nav className='ms-auto w-100 d-flex align-items-center'>
-                <div className='mx-auto'>
+                <div className='mx-auto' style={{paddingLeft: "11vw"}}>
                     <SearchBox />
                 </div>
                 <LinkContainer to='/cart'>
