@@ -4,7 +4,10 @@ dotenv.config();
 import express from 'express';
 const app = express();
 const PORT = process.env.PORT || 5000;
+import path from 'path';
 import cookieParser from 'cookie-parser';
+import cors from 'cors';
+app.use(cors());
 
 // Connect to DB
 import connectDB from './config/db.js';
@@ -39,6 +42,13 @@ app.use('/api/users', userRoutes);
 import orderRoutes from './routes/orderRoutes.js';
 app.use('/api/orders', orderRoutes);
 
+// Upload Routes
+import uploadRoutes from './routes/uploadRoutes.js';
+app.use('/api/upload', uploadRoutes);
+
+const __dirname = path.resolve(); // Set __dirname to the current directory
+app.use('/uploads', express.static(path.join(__dirname, '/uploads')));
+
 // Paypal Config Route
 app.get('/api/config/paypal', (req, res) => res.send({ clientId: process.env.PAYPAL_CLIENT_ID}));
 
@@ -46,8 +56,6 @@ app.get('/api/config/paypal', (req, res) => res.send({ clientId: process.env.PAY
 import { errorHandler, notFound } from './middleware/errorMiddleware.js';
 app.use(notFound);
 app.use(errorHandler);
-
-
 
 
 

@@ -5,7 +5,7 @@ import Message from "../../components/Message"
 import Loader from "../../components/Loader"
 import FormContainer from "../../components/FormContainer"
 import { toast } from "react-toastify"
-import { useGetProductDetailQuery, useUpdateProductMutation } from "../../slices/productsApiSlice"
+import { useGetProductDetailQuery, useUpdateProductMutation, useUploadProductImageMutation } from "../../slices/productsApiSlice"
 
 const ProductEditScreen = () => {
     const { id: productId } = useParams()
@@ -23,6 +23,7 @@ const ProductEditScreen = () => {
     const { product } = prod || { product: {} }
 
     const [updateProduct, { isLoading: loadingUpdate }] = useUpdateProductMutation()
+    const [uploadProductImage, { isLoading: loadingUpload }] = useUploadProductImageMutation();
 
     useEffect(() => {
         if(product) {
@@ -39,6 +40,7 @@ const ProductEditScreen = () => {
     const submitHandler = async (e) => {
         e.preventDefault()
         const updatedProduct = { productId, name, price, image, brand, category, countInStock, description }
+        console.log(updatedProduct);
         const result = await updateProduct(updatedProduct)
         if(result.error) {
             toast.error(result.error)
@@ -48,11 +50,26 @@ const ProductEditScreen = () => {
         }
     }
 
+    const uploadHandler = async (e) => {
+        const file = e.target.files[0]
+        const formData = new FormData()
+        formData.append('image', file)
+        try {
+            const res = await uploadProductImage(formData).unwrap()
+            console.log(res);
+            toast.success(res.message)
+            setImage(res.imagePath)
+        } catch(err) {
+            toast.error(err?.data?.message || err.error)
+        }
+    }
+
 
   return (
     <>
         <Link to='/admin/productlist' className='btn btn-light my-3'>Go Back</Link>
         <FormContainer>
+            <img src="/uploads/sample.jpg" alt="" />
             <h1>Edit Product</h1>
             {loadingUpdate && <Loader />}
             {isError && <Message variant='danger'>{isError}</Message>}
@@ -66,7 +83,12 @@ const ProductEditScreen = () => {
                         <Form.Label>Price</Form.Label>
                         <Form.Control type='number' placeholder='Enter price' value={price} onChange={(e) => setPrice(e.target.value)}></Form.Control>
                     </Form.Group>
-                    {/* Image Update */}
+                    <Form.Group controlId='image' className="my-2">
+                        <Form.Label>Image</Form.Label>
+                        <Form.Control type='text' placeholder='Enter image url' value={image} onChange={(e) => setImage(e.target.value)}></Form.Control>
+                        <Form.Control type='file' label='Choose File' onChange={uploadHandler} ></Form.Control>
+                        {loadingUpload && <Loader />}
+                    </Form.Group>
                     <Form.Group controlId='brand' className="my-2">
                         <Form.Label>Brand</Form.Label>
                         <Form.Control type='text' placeholder='Enter brand' value={brand} onChange={(e) => setBrand(e.target.value)}></Form.Control>
