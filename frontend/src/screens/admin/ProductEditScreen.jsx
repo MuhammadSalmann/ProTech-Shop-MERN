@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react"
 import { Link, useNavigate, useParams } from "react-router-dom"
-import { Form, Button } from "react-bootstrap"
+import { Form, Button, Image } from "react-bootstrap"
 import Message from "../../components/Message"
 import Loader from "../../components/Loader"
 import FormContainer from "../../components/FormContainer"
@@ -69,7 +69,6 @@ const ProductEditScreen = () => {
     <>
         <Link to='/admin/productlist' className='btn btn-light my-3'>Go Back</Link>
         <FormContainer>
-            <img src="/uploads/sample.jpg" alt="" />
             <h1>Edit Product</h1>
             {loadingUpdate && <Loader />}
             {isError && <Message variant='danger'>{isError}</Message>}
@@ -85,7 +84,8 @@ const ProductEditScreen = () => {
                     </Form.Group>
                     <Form.Group controlId='image' className="my-2">
                         <Form.Label>Image</Form.Label>
-                        <Form.Control type='text' placeholder='Enter image url' value={image} onChange={(e) => setImage(e.target.value)}></Form.Control>
+                        <Form.Control type='text' placeholder='Enter image url' value={image} onChange={() => setImage}></Form.Control>
+                        <Image className="my-2" src={image} alt={name} width={150} height={150} fluid />
                         <Form.Control type='file' label='Choose File' onChange={uploadHandler} ></Form.Control>
                         {loadingUpload && <Loader />}
                     </Form.Group>
