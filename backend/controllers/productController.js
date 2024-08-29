@@ -112,4 +112,14 @@ const createProductReview = wrapAsync(async (req, res) => {
     }
 })
 
-export { getProducts, getProductById, createProduct, deleteProduct, updateProduct, createProductReview };
+// @desc Get top rated products
+// @route GET /api/products/top
+// @access Public
+const getTopProducts = wrapAsync(async (req, res) => {
+    const products = await Product.find({})
+    .sort({ rating: -1 }) // Descending order of rating
+    .limit(3); 
+    res.status(200).json(products);
+});
+
+export { getProducts, getProductById, createProduct, deleteProduct, updateProduct, createProductReview, getTopProducts };
