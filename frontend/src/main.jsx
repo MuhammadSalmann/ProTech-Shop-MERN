@@ -12,6 +12,8 @@ import { Provider } from 'react-redux'
 import store from './store.js'
 // Paypal
 import { PayPalScriptProvider } from '@paypal/react-paypal-js';
+// Helmet Provider
+import { HelmetProvider } from 'react-helmet-async'
 // Screens
 import HomeScreen from './screens/HomeScreen.jsx'
 import ProductScreen from './screens/ProductScreen.jsx'
@@ -65,10 +67,12 @@ const router = createBrowserRouter(
 
 ReactDOM.createRoot(document.getElementById('root')).render(
   <React.StrictMode>
-    <Provider store={store}>
-      <PayPalScriptProvider deferLoading={true}>
-        <RouterProvider router={router} />
-      </PayPalScriptProvider>
-    </Provider>
+    <HelmetProvider>
+      <Provider store={store}>
+        <PayPalScriptProvider deferLoading={true}>
+          <RouterProvider router={router} />
+        </PayPalScriptProvider>
+      </Provider>
+    </HelmetProvider>
   </React.StrictMode>,
 )
