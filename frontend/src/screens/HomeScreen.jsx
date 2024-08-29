@@ -1,13 +1,16 @@
 import { useState, useEffect } from 'react'
+import { useParams } from 'react-router-dom'
 import { Row, Col } from "react-bootstrap"
 import Product from "../components/Product"
 import axios from 'axios'
 import { useGetProductsQuery } from '../slices/productsApiSlice'
 import Loader from '../components/Loader'
 import Message from '../components/Message'
+import Paginate from '../components/Paginate'
 
 const HomeScreen = () => {
-    const {data, isLoading, error} = useGetProductsQuery()
+    const { pageNumber } = useParams()
+    const {data, isLoading, error} = useGetProductsQuery({pageNumber})
     const { products } = data || { products: [] }  // destructuring products from data or setting it to an empty array if data is undefined
 
     // const [products, setProducts] = useState([])
@@ -46,6 +49,7 @@ const HomeScreen = () => {
                 </Col>
             ))}
         </Row>
+        <Paginate pages={data.pages} page={data.page} />
         </>
     )}
     </>

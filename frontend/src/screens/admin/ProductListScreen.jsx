@@ -5,10 +5,13 @@ import Loader from "../../components/Loader"
 import { useGetProductsQuery, useCreateProductMutation, useDeleteProductMutation } from "../../slices/productsApiSlice"
 import { FaEdit, FaTrash } from "react-icons/fa"
 import { toast } from "react-toastify"
+import { useParams } from "react-router-dom"
+import Paginate from "../../components/Paginate"
 
 
 const ProductListScreen = () => {
-    const { data: prods, isLoading, isError, refetch } = useGetProductsQuery()
+    const {pageNumber} = useParams()
+    const { data: prods, isLoading, isError, refetch } = useGetProductsQuery({pageNumber})
     const { products } = prods || { products: [] }
 
     const [createProduct, {isLoading: loadingCreate}] = useCreateProductMutation();
@@ -57,6 +60,7 @@ const ProductListScreen = () => {
         ) : isError ? (
             <Message variant='danger'>{isError}</Message>
         ) : (
+            <>
             <Table striped bordered hover responsive className='table-sm'>
             <thead>
                 <tr>
@@ -90,6 +94,8 @@ const ProductListScreen = () => {
                 ))}
             </tbody>
             </Table>
+            <Paginate pages={prods.pages} page={prods.page} isAdmin={true} />
+            </>
         )}
     </>
   )
